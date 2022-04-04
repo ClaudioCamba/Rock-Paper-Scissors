@@ -1,17 +1,22 @@
-console.log('Start Rock Paper Scissors Game!');
+// console.log('Start Rock Paper Scissors Game!');
 
 // Stored const/let variables 
 const optionsRPC = ['rock', 'paper', 'scissors'],
-    playerSelection = 'Rock'.toLowerCase(),
-    computerSelection = computerPlay();
+    logicRPC = {
+        'rock': 'scissors',
+        'paper': 'rock',
+        'scissors': 'paper'
+    };
 
-// function playerSelection(selection) {
-//     if (optionsRPC.includes(selection.toLowerCase())) {
-//         return selection.toLowerCase();
-//     } else {
-//         return 'Please input valid option (rock, paper or scissors)';
-//     }
-// }
+let playerSelection,
+    computerSelection,
+    numOfRounds = 5;
+scoreTracker = {
+    'player': 0,
+    'computer': 0,
+    'draw': 0
+};
+
 
 //  Function - Computer randomly select option 
 function computerPlay() {
@@ -21,26 +26,49 @@ function computerPlay() {
 
 // Function - Play a single round
 function playRound(playerSelection, computerSelection) {
-    // let playerWinText = '',
-    //     playerLoseText = '';
-    // console.log('computer: ' + computerSelection)
-    // console.log('player: ' + playerSelection)
+
     // If same its a draw
     if (playerSelection === computerSelection) {
-        console.log('draw');
-        // If paper it beats rock
-    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        console.log('win')
-        // If rock it beats scissors
-    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        console.log('win')
-        // If scissors it beats paper
-    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        console.log('win')
-        // Else you lose
+        return 'draw';
+        // return "Its a Draw! " + computerSelection + " equals " + playerSelection;
+    } else if (logicRPC[playerSelection] === computerSelection) {
+        return 'win';
+        // return "You Win! " + playerSelection + " beats " + computerSelection;
     } else {
-        console.log('lose');
+        return 'lose';
+        // return "You Lose! " + computerSelection + " beats " + playerSelection;
+    }
+
+}
+
+// Number of rounds
+function game() {
+    scoreTracker.player = 0;
+    scoreTracker.computer = 0;
+    scoreTracker.draw = 0;
+
+    for (let i = 0; i < numOfRounds; i++) {
+        playerSelection = prompt().toLowerCase();
+        computerSelection = computerPlay();
+        if (playRound(playerSelection, computerSelection) === 'win') {
+            scoreTracker.player++
+        } else if (playRound(playerSelection, computerSelection) === 'lose') {
+            scoreTracker.computer++
+        } else {
+            scoreTracker.draw++
+        }
+    }
+
+    if (scoreTracker.player > scoreTracker.computer) {
+        console.log('YOU WIN!');
+        console.log(scoreTracker)
+    } else if (scoreTracker.player < scoreTracker.computer) {
+        console.log('YOU LOSE!');
+        console.log(scoreTracker)
+    } else {
+        console.log('YOU DRAW!');
+        console.log(scoreTracker)
     }
 }
 
-playRound(playerSelection, computerSelection);
+game();

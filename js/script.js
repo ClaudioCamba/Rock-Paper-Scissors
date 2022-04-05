@@ -1,22 +1,14 @@
-// console.log('Start Rock Paper Scissors Game!');
-
 // Stored const/let variables 
 const optionsRPC = ['rock', 'paper', 'scissors'],
-    logicRPC = {
-        'rock': 'scissors',
-        'paper': 'rock',
-        'scissors': 'paper'
-    };
+    logicRPC = { 'rock': 'scissors', 'paper': 'rock', 'scissors': 'paper' };
 
+// Global variables to store
 let playerSelection,
     computerSelection,
-    numOfRounds = 5;
-scoreTracker = {
-    'player': 0,
-    'computer': 0,
-    'draw': 0
-};
-
+    gameTracker = {
+        'Player': 0,
+        'Computer': 0
+    };
 
 //  Function - Computer randomly select option 
 function computerPlay() {
@@ -27,48 +19,45 @@ function computerPlay() {
 // Function - Play a single round
 function playRound(playerSelection, computerSelection) {
 
-    // If same its a draw
-    if (playerSelection === computerSelection) {
-        return 'draw';
-        // return "Its a Draw! " + computerSelection + " equals " + playerSelection;
-    } else if (logicRPC[playerSelection] === computerSelection) {
-        return 'win';
-        // return "You Win! " + playerSelection + " beats " + computerSelection;
+    // Get player / computer options
+    playerSelection = prompt().toLowerCase();
+    computerSelection = computerPlay();
+
+    // Option comparison logic
+    if (logicRPC[playerSelection] === computerSelection) { // If player option beats computer option 
+        return 'Player Win! Player: ' + playerSelection + ' beats Computer: ' + computerSelection;
+    } else if (playerSelection !== computerSelection) { // If computer option beats player option 
+        return 'Computer Win! Computer: ' + computerSelection + ' beats Player: ' + playerSelection;
     } else {
-        return 'lose';
-        // return "You Lose! " + computerSelection + " beats " + playerSelection;
+        return 'Draw! Player: ' + computerSelection + ' & Computer: ' + playerSelection + ' are equal';
     }
 
 }
 
-// Number of rounds
+// Function to track score and console.log round and game winner/loser
 function game() {
-    scoreTracker.player = 0;
-    scoreTracker.computer = 0;
-    scoreTracker.draw = 0;
-
-    for (let i = 0; i < numOfRounds; i++) {
-        playerSelection = prompt().toLowerCase();
-        computerSelection = computerPlay();
-        if (playRound(playerSelection, computerSelection) === 'win') {
-            scoreTracker.player++
-        } else if (playRound(playerSelection, computerSelection) === 'lose') {
-            scoreTracker.computer++
-        } else {
-            scoreTracker.draw++
+    // Reset scores for new game
+    gameTracker.Player = 0;
+    gameTracker.Computer = 0;
+    // Loop playRound function to play multiple times
+    for (let i = 0; i < 5; i++) {
+        playRoundScore = playRound();
+        if (playRoundScore.indexOf('Player Win') > -1) {
+            gameTracker.Player++;
+        } else if (playRoundScore.indexOf('Computer Win') > -1) {
+            gameTracker.Computer++;
         }
+        console.log('ROUND[' + (i + 1) + '] | ' + playRoundScore);
     }
-
-    if (scoreTracker.player > scoreTracker.computer) {
-        console.log('YOU WIN!');
-        console.log(scoreTracker)
-    } else if (scoreTracker.player < scoreTracker.computer) {
-        console.log('YOU LOSE!');
-        console.log(scoreTracker)
+    // Final console.log for the winner/loser
+    if (gameTracker.Player > gameTracker.Computer) {
+        console.log('YOU WIN!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
+    } else if (gameTracker.Player < gameTracker.Computer) {
+        console.log('YOU LOSE!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
     } else {
-        console.log('YOU DRAW!');
-        console.log(scoreTracker)
+        console.log('ITS A DRAW!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
     }
 }
 
+// Run the game 
 game();

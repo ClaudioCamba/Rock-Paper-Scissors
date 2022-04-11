@@ -60,5 +60,5 @@ function game() {
 }
 
 // Run the game 
-game();
+// game();
 

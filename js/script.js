@@ -2,18 +2,25 @@
 const optionsRPC = ['rock', 'paper', 'scissors'];
 const logicRPC = { 'rock': 'scissors', 'paper': 'rock', 'scissors': 'paper' };
 const playButtons = document.querySelectorAll('.buttons-wrap button');
+const playerOption = document.querySelector('.player-op span');
+const compOption = document.querySelector('.comp-op span');
+const playerScore = document.querySelector('.player-score span');
+const compScore = document.querySelector('.comp-score span');
+const roundNumber = document.querySelector('.game-round span');
+const roundResult = document.querySelector('.round-result span');
+
 
 // Global variables to store
 let playerSelection,
     gameTracker = {
-        'Player': 0,
-        'Computer': 0
+        'round': 0,
+        'player': 0,
+        'computer': 0
     };
 
 // Function - Computer randomly select option 
 function computerPlay() {
     let randomRPC = optionsRPC[Math.floor(Math.random() * optionsRPC.length)];
-    // return randomRPC;
     return randomRPC;
 }
 
@@ -26,22 +33,49 @@ function playerChoice(e) {
 
 // Function - Play a single round
 function playRound(player, comp) {
+    let result;
 
     // Option comparison logic
     if (logicRPC[player] === comp) { // If player option beats computer option 
-        // return 'Player Win! Player: ' + player + ' beats Computer: ' + comp;
-        console.log('Player Win! Player: ' + player + ' beats Computer: ' + comp);
+        result = 'player win';
     } else if (player !== comp) { // If computer option beats player option 
-        // return 'Computer Win! Computer: ' + comp + ' beats Player: ' + player;
-        console.log('Computer Win! Computer: ' + comp + ' beats Player: ' + player);
-    } else {
-        // return 'Draw! Player: ' + comp + ' & Computer: ' + player + ' are equal';
-        console.log('Draw! Player: ' + comp + ' & Computer: ' + player + ' are equal');
+        result = 'computer win';
+    } else { // If both choices are the same
+        // return 'draw';
+        result = 'its a draw';
     }
 
+    printResults(player, comp, result);
+    return result;
 }
 
-// // Function to track score and console.log round and game winner/loser
+// Print selected options per round onto DOM
+function printResults(playerPrint, compPrint, result) {
+    playerOption.innerText = playerPrint;
+    compOption.innerText = compPrint;
+    roundResult.innerText = result;
+}
+
+// Check who the winner of the round is and update DOM and variable
+function printUpdateScores(score) {
+    if (score === 'player win') {
+        gameTracker.player++
+    } else if (score === 'computer win') {
+        gameTracker.computer++
+    }
+    gameTracker.round++
+
+    playerScore.innerText = gameTracker.player;
+    compScore.innerText = gameTracker.computer;
+    roundNumber.innerText = gameTracker.round;
+}
+
+function gameEnd() {
+    if ()
+}
+
+// Update player and computer score in DOM
+// Function to track score and console.log round and game winner/loser
 // function game() {
 //     // Reset scores for new game
 //     gameTracker.Player = 0;

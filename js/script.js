@@ -13,7 +13,6 @@ const roundResult = document.querySelector('.round-result span');
 // Global variables to store
 let playerSelection,
     gameTracker = {
-        'round': 0,
         'player': 0,
         'computer': 0
     };
@@ -30,7 +29,6 @@ function playerChoice(e) {
     playRound(playerSelection, computerPlay())
 }
 
-
 // Function - Play a single round
 function playRound(player, comp) {
     let result;
@@ -46,32 +44,32 @@ function playRound(player, comp) {
     }
 
     printResults(player, comp, result);
-    return result;
+    printUpdateScores(result);
 }
 
 // Print selected options per round onto DOM
 function printResults(playerPrint, compPrint, result) {
     playerOption.innerText = playerPrint;
     compOption.innerText = compPrint;
-    roundResult.innerText = result;
 }
 
 // Check who the winner of the round is and update DOM and variable
 function printUpdateScores(score) {
     if (score === 'player win') {
         gameTracker.player++
+        gameTracker.round++
     } else if (score === 'computer win') {
         gameTracker.computer++
+        gameTracker.round++
     }
-    gameTracker.round++
 
     playerScore.innerText = gameTracker.player;
     compScore.innerText = gameTracker.computer;
-    roundNumber.innerText = gameTracker.round;
+
 }
 
 function gameEnd() {
-    if ()
+
 }
 
 // Update player and computer score in DOM

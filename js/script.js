@@ -37,7 +37,7 @@ function playRound(e) {
     if (logicRPC[playerSelection] === computerSelection) { // If player selection beats computer option 
         updateGameTracker('player', 'computer', playerSelection, computerSelection);
     } else if (playerSelection !== computerSelection) { // If computer selection beats player option 
-        updateGameTracker('player', 'computer', playerSelection, computerSelection);
+        updateGameTracker('computer', 'player', playerSelection, computerSelection);
     } else {
         updateGameTracker('draw', 'draw', playerSelection, computerSelection);
     }
@@ -53,38 +53,35 @@ function updateGameTracker(winner, loser, playerOp, compOp) {
         gameTracker.player.push(0);
         gameTracker.computer.push(0);
     }
-
     gameTracker.roundWin.push(winner);
     gameTracker.playerOp.push(playerOp);
     gameTracker.computerOp.push(compOp);
 
-    console.log(gameTracker);
+    updateDOM(); // Update DOM
 }
 
 // Update DOM elements with player / computer selections and round result
-function updateDOM(trackP, trackPO, trackC, trackCO) {
-    console.log(trackP);
-    console.log(trackPO);
-    console.log(trackC);
-    console.log(trackCO);
+function updateDOM() {
+    let pScore = gameTracker.player,
+        cScore = gameTracker.computer,
+        pOp = gameTracker.playerOp,
+        cOp = gameTracker.computerOp,
+        round = gameTracker.roundWin[gameTracker.roundWin.length - 1],
+        numRound = gameTracker.roundWin.length;
+
+    // Update player / computer scores
+    elemDOM.playerScore.textContent = pScore.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    elemDOM.compScore.textContent = cScore.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    // Update selected options
+    elemDOM.playerOption.textContent = pOp[pOp.length - 1];
+    elemDOM.compOption.textContent = cOp[cOp.length - 1];
+    // Update round result
+    (round === 'draw') ? elemDOM.roundResult.textContent = 'Round ' + numRound + ' is a Draw!' : elemDOM.roundResult.textContent = round + ' Wins Round ' + numRound;
 }
 
-// // Check who the winner of the round is and update DOM and variable
-// function printUpdateScores(score) {
-//     if (score === 'player win') {
-//         gameTracker.player++
-//         gameTracker.round++
-//     } else if (score === 'computer win') {
-//         gameTracker.computer++
-//         gameTracker.round++
-//     }
 
-//     playerScore.innerText = gameTracker.player;
-//     compScore.innerText = gameTracker.computer;
-
-// }
-
-function gameEnd() {
+// 
+function gameControl() {
 
 }
 

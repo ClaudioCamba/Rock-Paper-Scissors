@@ -1,17 +1,18 @@
 // Stored const variables 
 const optionsRPC = ['rock', 'paper', 'scissors'];
 const logicRPC = { 'rock': 'scissors', 'paper': 'rock', 'scissors': 'paper' };
-const playButtons = document.querySelectorAll('.buttons-wrap button');
-const playerOption = document.querySelector('.player-op span');
-const compOption = document.querySelector('.comp-op span');
-const playerScore = document.querySelector('.player-score span');
-const compScore = document.querySelector('.comp-score span');
-const roundNumber = document.querySelector('.game-round span');
-const roundResult = document.querySelector('.round-result span');
-
+const elemDOM = {
+    playButtons: document.querySelectorAll('.buttons-wrap button'),
+    playerOption: document.querySelector('.player-op span'),
+    compOption: document.querySelector('.comp-op span'),
+    playerScore: document.querySelector('.player-score span'),
+    compScore: document.querySelector('.comp-score span'),
+    roundResult: document.querySelector('.round-result span')
+}
 
 // Global variables to store
 let playerSelection,
+    computerSelection,
     gameTracker = {
         'player': 0,
         'computer': 0
@@ -23,50 +24,46 @@ function computerPlay() {
     return randomRPC;
 }
 
-// Function - Get player option and play round
-function playerChoice(e) {
-    playerSelection = this.getAttribute('data-pick');
-    playRound(playerSelection, computerPlay())
-}
-
 // Function - Play a single round
-function playRound(player, comp) {
-    let result;
+function playRound(e) {
+
+    playerSelection = this.getAttribute('data-pick'); // Get player selection from click event
+    computerSelection = computerPlay(); // Storing computer selection in order to compare
+    // let result;
 
     // Option comparison logic
-    if (logicRPC[player] === comp) { // If player option beats computer option 
+    if (logicRPC[playerSelection] === computerSelection) { // If player selection beats computer option 
         result = 'player win';
-    } else if (player !== comp) { // If computer option beats player option 
+    } else if (playerSelection !== computerSelection) { // If computer selection beats player option 
         result = 'computer win';
-    } else { // If both choices are the same
-        // return 'draw';
-        result = 'its a draw';
+    } else {
+        result = 'its a draw'; // If both selections are the same then its a draw
     }
 
-    printResults(player, comp, result);
-    printUpdateScores(result);
+    // printResults(player, comp, result);
+    console.log(result);
 }
 
 // Print selected options per round onto DOM
-function printResults(playerPrint, compPrint, result) {
-    playerOption.innerText = playerPrint;
-    compOption.innerText = compPrint;
-}
+// function printResults(playerPrint, compPrint, result) {
+//     playerOption.innerText = playerPrint;
+//     compOption.innerText = compPrint;
+// }
 
-// Check who the winner of the round is and update DOM and variable
-function printUpdateScores(score) {
-    if (score === 'player win') {
-        gameTracker.player++
-        gameTracker.round++
-    } else if (score === 'computer win') {
-        gameTracker.computer++
-        gameTracker.round++
-    }
+// // Check who the winner of the round is and update DOM and variable
+// function printUpdateScores(score) {
+//     if (score === 'player win') {
+//         gameTracker.player++
+//         gameTracker.round++
+//     } else if (score === 'computer win') {
+//         gameTracker.computer++
+//         gameTracker.round++
+//     }
 
-    playerScore.innerText = gameTracker.player;
-    compScore.innerText = gameTracker.computer;
+//     playerScore.innerText = gameTracker.player;
+//     compScore.innerText = gameTracker.computer;
 
-}
+// }
 
 function gameEnd() {
 
@@ -101,4 +98,4 @@ function gameEnd() {
 // Run the game
 // game();
 
-playButtons.forEach(playButtons => playButtons.addEventListener('click', playerChoice));
+elemDOM.playButtons.forEach(playButtons => playButtons.addEventListener('click', playRound));

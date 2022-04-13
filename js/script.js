@@ -2,7 +2,9 @@
 const optionsRPC = ['rock', 'paper', 'scissors'];
 const logicRPC = { 'rock': 'scissors', 'paper': 'rock', 'scissors': 'paper' };
 const elemDOM = {
-    playButtons: document.querySelectorAll('.buttons-wrap button'),
+    mainContainer: document.querySelector('.main-container'),
+    playButtons: document.querySelectorAll('.buttons-wrap button[data-pick]'),
+    resetButton: document.querySelector('.buttons-wrap button.reset-game'),
     playerOption: document.querySelector('.player-op span'),
     compOption: document.querySelector('.comp-op span'),
     playerScore: document.querySelector('.player-score span'),
@@ -62,56 +64,64 @@ function updateGameTracker(winner, loser, playerOp, compOp) {
 
 // Update DOM elements with player / computer selections and round result
 function updateDOM() {
-    let pScore = gameTracker.player,
-        cScore = gameTracker.computer,
-        pOp = gameTracker.playerOp,
-        cOp = gameTracker.computerOp,
+    let pScore = gameTracker.player.reduce((previousValue, currentValue) => previousValue + currentValue, 0),
+        cScore = gameTracker.computer.reduce((previousValue, currentValue) => previousValue + currentValue, 0),
+        pOp = gameTracker.playerOp[gameTracker.playerOp.length - 1],
+        cOp = gameTracker.computerOp[gameTracker.computerOp.length - 1],
         round = gameTracker.roundWin[gameTracker.roundWin.length - 1],
-        numRound = gameTracker.roundWin.length;
+        numRound = gameTracker.roundWin.length,
+        endResult = '';
+
 
     // Update player / computer scores
-    elemDOM.playerScore.textContent = pScore.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-    elemDOM.compScore.textContent = cScore.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    elemDOM.playerScore.textContent = pScore;
+    elemDOM.compScore.textContent = cScore;
     // Update selected options
-    elemDOM.playerOption.textContent = pOp[pOp.length - 1];
-    elemDOM.compOption.textContent = cOp[cOp.length - 1];
+    elemDOM.playerOption.textContent = pOp;
+    elemDOM.compOption.textContent = cOp;
     // Update round result
-    (round === 'draw') ? elemDOM.roundResult.textContent = 'Round ' + numRound + ' is a Draw!' : elemDOM.roundResult.textContent = round + ' Wins Round ' + numRound;
+    if (pScore === 5) {
+        endResult = 'You win!!';
+        endResetGame(endResult);
+    } else if (cScore === 5) {
+        endResult = 'You lose!!';
+        endResetGame(endResult);
+    } else if (round) {
+        (round === 'draw') ? endResult = 'Round ' + numRound + ' is a Draw!' : endResult = round + ' Wins Round ' + numRound;
+    }
+
+    elemDOM.roundResult.textContent = endResult;
+
 }
 
+// Checks score and resets game
+function endResetGame(result) {
 
-// 
-function gameControl() {
-
+    switch (result) {
+        case 'You win!!':
+            console.log('WIN WIN');
+            elemDOM.mainContainer.classList.add('player-win')
+            break;
+        case 'You lose!!':
+            console.log('LOSE LOSE');
+            elemDOM.mainContainer.classList.add('player-lose')
+            break;
+        case 'reset':
+            elemDOM.mainContainer.classList.remove('player-win');
+            elemDOM.mainContainer.classList.remove('player-lose');
+            console.log('RESET GAME!')
+    }
 }
 
-// Update player and computer score in DOM
-// Function to track score and console.log round and game winner/loser
-// function game() {
-//     // Reset scores for new game
-//     gameTracker.Player = 0;
-//     gameTracker.Computer = 0;
-//     // Loop playRound function to play multiple times
-//     for (let i = 0; i < 5; i++) {
-//         playRoundScore = playRound();
-//         if (playRoundScore.indexOf('Player Win') > -1) {
-//             gameTracker.Player++;
-//         } else if (playRoundScore.indexOf('Computer Win') > -1) {
-//             gameTracker.Computer++;
-//         }
-//         console.log('ROUND[' + (i + 1) + '] | ' + playRoundScore);
-//     }
-//     // Final console.log for the winner/loser
-//     if (gameTracker.Player > gameTracker.Computer) {
-//         console.log('YOU WIN!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
-//     } else if (gameTracker.Player < gameTracker.Computer) {
-//         console.log('YOU LOSE!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
-//     } else {
-//         console.log('ITS A DRAW!! - Player ' + gameTracker.Player + ' | Computer: ' + gameTracker.Computer);
-//     }
-// }
-
-// Run the game
-// game();
+// Reset Game
+elemDOM.resetButton.addEventListener('click', function () {
+    endResetGame('reset');
+    gameTracker.player = [0];
+    gameTracker.playerOp = [];
+    gameTracker.computer = [0];
+    gameTracker.computerOp = [];
+    gameTracker.roundWin = [];
+    updateDOM(); // Update DOM
+})
 
 elemDOM.playButtons.forEach(playButtons => playButtons.addEventListener('click', playRound));

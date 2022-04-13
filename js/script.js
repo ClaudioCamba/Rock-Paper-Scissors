@@ -14,8 +14,11 @@ const elemDOM = {
 let playerSelection,
     computerSelection,
     gameTracker = {
-        'player': 0,
-        'computer': 0
+        'player': [],
+        'playerOp': [],
+        'computer': [],
+        'computerOp': [],
+        'roundWin': []
     };
 
 // Function - Computer randomly select option 
@@ -29,26 +32,42 @@ function playRound(e) {
 
     playerSelection = this.getAttribute('data-pick'); // Get player selection from click event
     computerSelection = computerPlay(); // Storing computer selection in order to compare
-    // let result;
 
     // Option comparison logic
     if (logicRPC[playerSelection] === computerSelection) { // If player selection beats computer option 
-        result = 'player win';
+        updateGameTracker('player', 'computer', playerSelection, computerSelection);
     } else if (playerSelection !== computerSelection) { // If computer selection beats player option 
-        result = 'computer win';
+        updateGameTracker('player', 'computer', playerSelection, computerSelection);
     } else {
-        result = 'its a draw'; // If both selections are the same then its a draw
+        updateGameTracker('draw', 'draw', playerSelection, computerSelection);
     }
-
-    // printResults(player, comp, result);
-    console.log(result);
 }
 
-// Print selected options per round onto DOM
-// function printResults(playerPrint, compPrint, result) {
-//     playerOption.innerText = playerPrint;
-//     compOption.innerText = compPrint;
-// }
+// Update gameTracker Object
+function updateGameTracker(winner, loser, playerOp, compOp) {
+
+    if (winner !== 'draw') {
+        gameTracker[winner].push(1);
+        gameTracker[loser].push(0);
+    } else {
+        gameTracker.player.push(0);
+        gameTracker.computer.push(0);
+    }
+
+    gameTracker.roundWin.push(winner);
+    gameTracker.playerOp.push(playerOp);
+    gameTracker.computerOp.push(compOp);
+
+    console.log(gameTracker);
+}
+
+// Update DOM elements with player / computer selections and round result
+function updateDOM(trackP, trackPO, trackC, trackCO) {
+    console.log(trackP);
+    console.log(trackPO);
+    console.log(trackC);
+    console.log(trackCO);
+}
 
 // // Check who the winner of the round is and update DOM and variable
 // function printUpdateScores(score) {

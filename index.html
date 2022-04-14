@@ -13,8 +13,17 @@
       <h1>ROCK, PAPER & SCISSORS</h1>
       <div class="game-feed">
         <div class="game-score">
-          <h3 class="player-score">Player Score: <span>0</span></h3>
-          <h3 class="comp-score">Computer Score: <span>0</span></h3>
+          <!-- <h3 class="player-score">Player Score: <span>0</span></h3> -->
+          <label for="player"
+            >Player
+            <progress id="player" value="0" max="5">32%</progress>
+          </label>
+
+          <!-- <h3 class="comp-score">Computer Score: <span>0</span></h3> -->
+          <label for="computer"
+            >Computer
+            <progress id="computer" value="0" max="5">32%</progress>
+          </label>
         </div>
         <div class="round-options">
           <h3 class="round-result">Result: <span></span></h3>

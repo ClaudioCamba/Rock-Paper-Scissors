@@ -18,12 +18,32 @@ body {
   padding: 25px;
   border-radius: 12px;
   border: 5px solid #558abb;
+  text-align: center;
 }
 /* Title */
 .main-container h1 {
   color: #558abb;
 }
 
+/* Loading bar */
+.game-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+label progress {
+  width: 200px;
+  height: 50px;
+}
 /* Style working w/ functionality */
 .main-container .reset-game,
 .main-container.player-win button[data-pick],

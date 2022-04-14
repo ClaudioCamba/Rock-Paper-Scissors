@@ -109,7 +109,8 @@ function endResetGame(result) {
         case 'reset':
             elemDOM.mainContainer.classList.remove('player-win');
             elemDOM.mainContainer.classList.remove('player-lose');
-            console.log('RESET GAME!')
+
+            console.log('RESET GAME!');
     }
 }
 

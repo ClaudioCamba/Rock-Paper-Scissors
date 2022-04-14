@@ -5,13 +5,13 @@ const elemDOM = {
     mainContainer: document.querySelector('.main-container'),
     playButtons: document.querySelectorAll('.buttons-wrap button[data-pick]'),
     resetButton: document.querySelector('.buttons-wrap button.reset-game'),
-    playerOption: document.querySelector('.player-op span'),
-    compOption: document.querySelector('.comp-op span'),
+    playerOption: document.querySelector('.player-op'),
+    compOption: document.querySelector('.comp-op'),
     // playerScore: document.querySelector('.player-score span'),
     playerScore: document.querySelector('#player'),
     // compScore: document.querySelector('.comp-score span'),
     compScore: document.querySelector('#computer'),
-    roundResult: document.querySelector('.round-result span')
+    roundResult: document.querySelector('.round-result')
 }
 
 // Global variables to store
@@ -81,8 +81,8 @@ function updateDOM() {
     // elemDOM.compScore.textContent = cScore;
     elemDOM.compScore.setAttribute('value', cScore)
     // Update selected options
-    elemDOM.playerOption.textContent = pOp;
-    elemDOM.compOption.textContent = cOp;
+    elemDOM.playerOption.classList.add = pOp;
+    elemDOM.compOption.classList.add = cOp;
     // Update round result
     if (pScore === 5) {
         endResult = 'You win!!';
@@ -91,7 +91,7 @@ function updateDOM() {
         endResult = 'You lose!!';
         endResetGame(endResult);
     } else if (round) {
-        (round === 'draw') ? endResult = 'Round ' + numRound + ' is a Draw!' : endResult = round + ' Wins Round ' + numRound;
+        (round === 'draw') ? endResult = 'draw in round ' + numRound : endResult = round + ' wins round ' + numRound;
     }
 
     elemDOM.roundResult.textContent = endResult;

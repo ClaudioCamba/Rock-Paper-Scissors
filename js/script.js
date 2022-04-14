@@ -7,9 +7,7 @@ const elemDOM = {
     resetButton: document.querySelector('.buttons-wrap button.reset-game'),
     playerOption: document.querySelector('.player-op'),
     compOption: document.querySelector('.comp-op'),
-    // playerScore: document.querySelector('.player-score span'),
     playerScore: document.querySelector('#player'),
-    // compScore: document.querySelector('.comp-score span'),
     compScore: document.querySelector('#computer'),
     roundResult: document.querySelector('.round-result')
 }
@@ -76,13 +74,11 @@ function updateDOM() {
 
 
     // Update player / computer scores
-    // elemDOM.playerScore.textContent = pScore;
     elemDOM.playerScore.setAttribute('value', pScore)
-    // elemDOM.compScore.textContent = cScore;
     elemDOM.compScore.setAttribute('value', cScore)
     // Update selected options
-    elemDOM.playerOption.classList.add = pOp;
-    elemDOM.compOption.classList.add = cOp;
+    elemDOM.playerOption.setAttribute('class', 'player-op ' + pOp);
+    elemDOM.compOption.setAttribute('class', 'comp-op ' + cOp);
     // Update round result
     if (pScore === 5) {
         endResult = 'You win!!';

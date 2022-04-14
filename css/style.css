@@ -20,25 +20,36 @@ body,
 .main-container {
   background: #f4f7f8;
   max-width: 600px;
-  margin-top: 100px;
+  margin: 100px 0;
   padding: 25px;
   border-radius: 12px;
   border: 5px solid #558abb;
   text-align: center;
+  width: 100%;
 }
 /* Title */
 .main-container h1 {
   color: #558abb;
 }
+/* Subtitle */
 
+.round-result {
+  text-transform: uppercase;
+  height: 27px;
+  text-align: center;
+  margin: 12px 0;
+}
 /* Loading bar */
-label {
+label,
+.round-options > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 12px;
   flex: 1 1 0;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 label progress {
@@ -51,14 +62,41 @@ label progress {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
-
-/* Style working w/ functionality */
+/* Image Options */
+.round-options > div {
+  height: 180px;
+}
+.round-options img {
+  max-height: 145px;
+}
+/* Option button styling */
+.buttons-wrap {
+  display: flex;
+  gap: 25px;
+  margin-top: 25px;
+}
+.buttons-wrap button {
+  background-color: #fff;
+  border: 5px solid #558abb;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #558abb;
+  flex: 1 1 0;
+}
+/* Style working w/ functionality - show/hide */
 .main-container .reset-game,
 .main-container.player-win button[data-pick],
-.main-container.player-lose button[data-pick] {
+.main-container.player-lose button[data-pick],
+.player-op img,
+.comp-op img {
   display: none;
 }
 
+.scissors > img.scissors,
+.paper > img.paper,
+.rock > img.rock,
 .main-container.player-win .reset-game,
 .main-container.player-lose .reset-game {
   display: inline-block;
